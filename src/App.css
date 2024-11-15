@@ -14,6 +14,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .container {
@@ -21,32 +22,42 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
 }
 
 .card {
   background: var(--card-background);
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 40px;
+  padding: 20px;
   width: 100%;
   max-width: 500px;
+  margin: 10px;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 h1 {
   color: var(--primary-color);
   margin: 0 0 10px 0;
-  font-size: 2em;
+  font-size: 1.8em;
+  line-height: 1.2;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5em;
+  }
 }
 
 .subtitle {
   color: #666;
   margin: 0;
+  font-size: 1em;
+  line-height: 1.4;
 }
 
 .form {
@@ -64,6 +75,7 @@ h1 {
 label {
   font-weight: 500;
   color: var(--text-color);
+  font-size: 0.95em;
 }
 
 input {
@@ -72,6 +84,8 @@ input {
   border-radius: 6px;
   font-size: 16px;
   transition: border-color 0.3s ease;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 input:focus {
@@ -80,7 +94,7 @@ input:focus {
 }
 
 .button {
-  padding: 12px 24px;
+  padding: 14px 24px;
   background-color: var(--primary-color);
   color: white;
   border: none;
@@ -88,10 +102,17 @@ input:focus {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
 }
 
 .button:hover {
   background-color: var(--secondary-color);
+}
+
+.button:active {
+  transform: scale(0.98);
 }
 
 .button.secondary {
@@ -108,22 +129,46 @@ input:focus {
 .drop-zone {
   border: 2px dashed var(--border-color);
   border-radius: 8px;
-  padding: 40px 20px;
+  padding: 30px 15px;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 20px;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
 }
 
-.drop-zone:hover {
+.drop-zone:hover, .drop-zone:active {
   border-color: var(--primary-color);
   background-color: rgba(0, 119, 181, 0.05);
 }
 
+.upload-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.upload-icon {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.upload-text {
+  font-size: 0.95em;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0 10px;
+}
+
 .drop-zone-subtitle {
   color: #666;
-  font-size: 14px;
-  margin-top: 8px;
+  font-size: 0.85em;
+  margin: 5px 0 0 0;
 }
 
 .loading {
@@ -134,28 +179,29 @@ input:focus {
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid var(--primary-color);
+  width: 35px;
+  height: 35px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 .completion-message {
   text-align: center;
+  padding: 20px 10px;
 }
 
 .success-icon {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: var(--success-color);
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 30px;
+  font-size: 25px;
   margin: 0 auto 20px;
 }
 
@@ -164,12 +210,58 @@ input:focus {
   100% { transform: rotate(360deg); }
 }
 
-@media (max-width: 600px) {
-  .card {
-    padding: 20px;
+/* Mejoras específicas para móvil */
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
   }
 
-  h1 {
-    font-size: 1.5em;
+  .card {
+    padding: 15px;
+    margin: 5px;
+  }
+
+  .button {
+    padding: 12px 20px;
+    width: 100%;
+  }
+
+  .drop-zone {
+    padding: 20px 10px;
+  }
+
+  input {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .upload-text {
+    font-size: 0.9em;
+  }
+}
+
+/* Prevenir zoom en inputs en iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
+}
+
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) {
+  .button:hover {
+    background-color: var(--primary-color);
+  }
+
+  .button.secondary:hover {
+    background-color: transparent;
+    color: var(--primary-color);
+  }
+
+  .drop-zone:hover {
+    border-color: var(--border-color);
+    background-color: transparent;
   }
 }
