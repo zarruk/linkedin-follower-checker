@@ -6,5 +6,21 @@ echo "🚀 Iniciando setup..."
 echo "📦 Instalando dependencias..."
 npm install
 
-# Iniciar el servidor y el cliente en modo desarrollo
-echo "🌐 Iniciando el servidor y el clien
+# Verificar que todos los archivos necesarios estén presentes
+if [ ! -f "package.json" ]; then
+    echo "❌ Error: package.json no encontrado"
+    exit 1
+fi
+
+# Construir la aplicación React
+echo "🔨 Construyendo la aplicación..."
+npm run build
+
+# Verificar que el build se creó correctamente
+if [ ! -d "build" ]; then
+    echo "❌ Error: La construcción falló"
+    exit 1
+fi
+
+# Ejecutar el servidor
+echo "✅ Setup completado exitosamente"

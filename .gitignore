@@ -17,8 +17,10 @@
 .env.test.local
 .env.production.local
 .env.backup
-render.yaml
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Render specific
+.render-buildpacks
